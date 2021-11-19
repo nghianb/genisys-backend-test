@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ShortenUrlController;
+use App\Http\Controllers\URLShortenerController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +16,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', HomeController::class)
+    ->name('home');
+
+Route::resource('/shorten-urls', ShortenUrlController::class)
+    ->only('store', 'show');
+
+Route::get('/{hashId}', URLShortenerController::class)
+    ->name('url-shortener');
