@@ -19,3 +19,9 @@ Viết website tạo link rút gọn (shorten URL) cho phép người dùng có 
 - Cập nhật tiến độ liên tục trên discord
 ## Deadline
 10 ngày, tính từ 12h30 ngày 15/11/2021 đến 12h30 ngày 24/11/2021.
+
+# Triển khai
+
+## Demo
+
+https://genisys-backend-test.herokuapp.com
