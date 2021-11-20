@@ -24,7 +24,7 @@ class StoreShortenUrlRequest extends FormRequest
     public function rules()
     {
         return [
-            'destination_url' => ['required', 'url'],
+            'destination_url' => ['required', 'url', 'max:255'],
             'g-recaptcha-response' => ['required', 'captcha']
         ];
     }

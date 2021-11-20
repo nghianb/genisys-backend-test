@@ -22,5 +22,5 @@ Route::get('/', HomeController::class)
 Route::resource('/shorten-urls', ShortenUrlController::class)
     ->only('store', 'show');
 
-Route::get('/{hashId}', URLShortenerController::class)
+Route::get('/{alias}', URLShortenerController::class)
     ->name('url-shortener');

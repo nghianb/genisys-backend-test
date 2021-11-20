@@ -2,17 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ShortenUrl;
-use Hashids\Hashids;
+use App\Services\UrlShortener\ShortenUrlResolver;
 
 class URLShortenerController extends Controller
 {
-    public function __invoke($hashId)
-    {
-        $hashids = new Hashids();
-        $id = $hashids->decode($hashId)[0];
+    protected $shortenUrlResolver;
 
-        $shortenUrl = ShortenUrl::findOrFail($id);
+    public function __construct(
+        ShortenUrlResolver $shortenUrlResolver
+    ){
+        $this->shortenUrlResolver = $shortenUrlResolver;
+    }
+    
+    public function __invoke($alias)
+    {
+        $shortenUrl = $this->shortenUrlResolver->resolve($alias);
 
         return redirect($shortenUrl->destination_url);
     }
