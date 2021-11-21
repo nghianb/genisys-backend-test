@@ -6,8 +6,17 @@
         <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
         </ul>
         <div class="text-end">
-            <button type="button" class="btn btn-outline-light me-2">Login</button>
-            <button type="button" class="btn btn-warning">Sign-up</button>
+            @auth
+                <span>Hi, {{ auth()->user()->name }}</span> -
+                <a href="javascript:document.getElementById('logout_form').submit()">logout</a>
+                <form id="logout_form" action="{{ route('logout') }}" method="post" class="d-none">
+                    @csrf
+                </form>
+            @endauth
+            @guest
+                <a href="{{ route('login.show') }}" class="btn btn-outline-light me-2">Login</a>
+                <a href="{{ route('register.show') }}" class="btn btn-warning">Register</a>
+            @endguest
         </div>
     </div>
 </div>
