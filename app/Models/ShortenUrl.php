@@ -10,6 +10,7 @@ class ShortenUrl extends Model
     use HasFactory;
 
     protected $fillable = [
+        'user_id',
         'alias',
         'destination_url',
     ];

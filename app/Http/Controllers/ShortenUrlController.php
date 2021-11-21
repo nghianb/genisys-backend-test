@@ -19,6 +19,7 @@ class ShortenUrlController extends Controller
     public function store(StoreShortenUrlRequest $request)
     {
         $shortentUrl = $this->shortenUrlBuilder
+            ->setUser($request->user())
             ->setDestinationUrl($request->input('destination_url'))
             ->make();
 
