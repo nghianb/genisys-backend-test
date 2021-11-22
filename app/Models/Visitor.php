@@ -18,8 +18,18 @@ class Visitor extends Model
         'ip',
     ];
 
+    public function agent()
+    {
+        return $this->belongsTo(Agent::class);
+    }
+
     public function device()
     {
         return $this->belongsTo(Device::class);
+    }
+
+    public function geoLocation()
+    {
+        return $this->belongsTo(GeoLocation::class);
     }
 }

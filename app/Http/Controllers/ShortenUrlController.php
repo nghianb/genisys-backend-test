@@ -52,6 +52,10 @@ class ShortenUrlController extends Controller
             throw new UnauthorizedException();
         }
 
-        return view('shorten-urls.show', compact('shortenUrl'));
+        $visitors = $shortenUrl->visitors()
+            ->with(['agent', 'device', 'geoLocation'])
+            ->get();
+
+        return view('shorten-urls.show', compact('shortenUrl', 'visitors'));
     }
 }
