@@ -26,7 +26,7 @@ class URLShortenerController extends Controller
         $visitor = $this->tracker->track($request);
 
         if ($visitor) {
-            $shortenUrl->visitors()->attach($visitor);
+            $shortenUrl->visitors()->syncWithoutDetaching($visitor);
         }
 
         return $this->redirectWithAdditionalRequestParams(

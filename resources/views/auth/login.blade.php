@@ -27,6 +27,9 @@
                                     <small class="text-danger">{{ $errors->first('password') }}</small>
                                 @enderror
                             </div>
+                            <div class="mb-3">
+                                {!! NoCaptcha::display() !!}
+                            </div>
                             <button class="w-100 btn btn-lg btn-primary" type="submit">Login</button>
                         </form>
                     </div>
@@ -35,3 +38,7 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+    {!! NoCaptcha::renderJs() !!}
+@endpush

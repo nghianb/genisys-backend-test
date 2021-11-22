@@ -4,6 +4,14 @@
             NGHIANB
         </a>
         <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+            @auth
+                <li>
+                    <a href="{{ route('shorten-urls.index') }}" class="nav-link px-2 text-secondary">Shorten url</a>
+                </li>
+            @endauth
+            <li>
+                <a href="{{ route('pricing') }}" class="nav-link px-2 text-secondary">Pricing</a>
+            </li>
         </ul>
         <div class="text-end">
             @auth

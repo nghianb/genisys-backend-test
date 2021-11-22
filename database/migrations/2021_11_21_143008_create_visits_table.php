@@ -14,8 +14,10 @@ class CreateVisitsTable extends Migration
     public function up()
     {
         Schema::create('visits', function (Blueprint $table) {
+            $table->id();
             $table->unsignedBigInteger('shorten_url_id');
             $table->unsignedBigInteger('visitor_id');
+            $table->timestamps();
         });
     }
 
