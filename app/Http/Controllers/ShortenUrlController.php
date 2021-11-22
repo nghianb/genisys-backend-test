@@ -6,6 +6,8 @@ use App\Http\Requests\StoreShortenUrlRequest;
 use App\Models\ShortenUrl;
 use App\Services\UrlShortener\ShortenUrlBuilder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\URL;
+use Illuminate\Validation\UnauthorizedException;
 
 class ShortenUrlController extends Controller
 {
@@ -35,11 +37,21 @@ class ShortenUrlController extends Controller
             ->setDestinationUrl($request->input('destination_url'))
             ->make();
 
+        if (!$request->user()) {
+            $redirectUrl = URL::signedRoute('shorten-urls.show', $shortentUrl);
+
+            return redirect($redirectUrl);
+        }
+
         return redirect()->route('shorten-urls.show', $shortentUrl);
     }
 
-    public function show(ShortenUrl $shortenUrl)
+    public function show(ShortenUrl $shortenUrl, Request $request)
     {
+        if (!$request->user() && !$request->hasValidSignature()) {
+            throw new UnauthorizedException();
+        }
+
         return view('shorten-urls.show', compact('shortenUrl'));
     }
 }
