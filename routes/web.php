@@ -22,6 +22,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', HomeController::class)
     ->name('home');
 
+Route::view('/pricing', 'pricing')
+    ->name('pricing');
+
 Route::group(['middleware' => 'guest'], function () {
     Route::group(['prefix' => 'login'], function () {
         Route::get('/', [LoginController::class, 'show'])
