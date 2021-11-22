@@ -39,16 +39,48 @@
             </div>
         </div>
     </div>
-    <div class="p-5">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8">
-                    <canvas id="pageViewChart"></canvas>
-                </div>
-                <div class="col-lg-4">
-                    <canvas id="deviceChart"></canvas>
+    <div class="container">
+        <div class="p-5">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8">
+                        <canvas id="pageViewChart"></canvas>
+                    </div>
+                    <div class="col-lg-4">
+                        <canvas id="deviceChart"></canvas>
+                    </div>
                 </div>
             </div>
+        </div>
+        <div>
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>IP</th>
+                        <td>Country</td>
+                        <td>Latitude</td>
+                        <td>Longitude</td>
+                        <td>Device</td>
+                        <td>Browser</td>
+                        <td>Platform</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($visitors as $visitor)
+                        <tr>
+                            <td>{{ $visitor->id }}</td>
+                            <td>{{ $visitor->ip }}</td>
+                            <td>{{ optional($visitor->geoLocation)->country_name }}</td>
+                            <td>{{ optional($visitor->geoLocation)->latitude }}</td>
+                            <td>{{ optional($visitor->geoLocation)->longitude }}</td>
+                            <td>{{ optional($visitor->device)->model }}</td>
+                            <td>{{ optional($visitor->agent)->browser }} ({{ optional($visitor->agent)->browser_version }})</td>
+                            <td>{{ optional($visitor->device)->platform }} ({{ optional($visitor->device)->platform_version }})</td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
         </div>
     </div>
 @endsection
