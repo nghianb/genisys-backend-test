@@ -41,8 +41,82 @@
     </div>
     <div class="p-5">
         <div class="container">
-            <h2 class="text-center">Analytic coming soon!</h2>
-            <p class="text-center">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas repellendus deserunt eum amet in, optio obcaecati accusamus! Dignissimos quasi eius vero mollitia itaque quo minima cum, autem velit consectetur reiciendis molestiae dolores dicta quia cumque! Quos porro ex est vitae repellendus labore temporibus, vel exercitationem velit accusantium, voluptatum quaerat beatae culpa placeat. Libero sapiente eum a eaque omnis optio ut expedita hic sed suscipit, placeat, magni nesciunt ad soluta tempore? Consectetur molestias inventore dolores dolorum laboriosam expedita, voluptatibus culpa. Quasi quia facilis dolore alias obcaecati exercitationem laudantium aliquid quibusdam. Repellat quibusdam harum deleniti praesentium possimus natus nostrum sit dolore iusto?</p>
+            <div class="row">
+                <div class="col-lg-8">
+                    <canvas id="pageViewChart"></canvas>
+                </div>
+                <div class="col-lg-4">
+                    <canvas id="deviceChart"></canvas>
+                </div>
+            </div>
         </div>
     </div>
 @endsection
+
+@push('scripts')
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        $.get('{{ route("shorten-urls.analytics.page-view", $shortenUrl) }}')
+            .then(function (response) {
+                const data = {
+                    labels: response.map(pageView => pageView.date),
+                    datasets: [{
+                        label: 'Page view',
+                        backgroundColor: 'rgb(255, 99, 132)',
+                        borderColor: 'rgb(255, 99, 132)',
+                        data: response.map(pageView => pageView.views),
+                    }]
+                };
+
+                const config = {
+                    type: 'line',
+                    data: data,
+                    options: {}
+                };
+
+                const pageViewChart = new Chart(
+                    document.getElementById('pageViewChart'),
+                    config
+                );
+            });
+    </script>
+    <script>
+        const DEVICE_COLORS = {
+            desktop: 'green',
+            mobile: 'yellow',
+            tablet: 'red'
+        };
+
+        $.get('{{ route("shorten-urls.analytics.device", $shortenUrl) }}')
+            .then(function (response) {
+                const data = {
+                    labels: response.map(device => device.device),
+                    datasets: [
+                        {
+                            label: 'Dataset 1',
+                            data: response.map(device => device.count),
+                            backgroundColor: response.map(device => DEVICE_COLORS[device.device]),
+                        }
+                    ]
+                };
+                
+                const config = {
+                    type: 'pie',
+                    data: data,
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                position: 'top',
+                            },
+                        }
+                    },
+                };
+
+                const deviceChart = new Chart(
+                    document.getElementById('deviceChart'),
+                    config
+                );
+            });        
+    </script>
+@endpush

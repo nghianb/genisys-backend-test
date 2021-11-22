@@ -17,4 +17,9 @@ class Visitor extends Model
         'geo_location_id',
         'ip',
     ];
+
+    public function device()
+    {
+        return $this->belongsTo(Device::class);
+    }
 }

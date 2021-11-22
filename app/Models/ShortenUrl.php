@@ -20,8 +20,15 @@ class ShortenUrl extends Model
         return route('url-shortener', $this->alias);
     }
 
+    public function visits()
+    {
+        return $this->hasMany(Visit::class);
+    }
+
     public function visitors()
     {
-        return $this->belongsToMany(Visitor::class, 'visits');
+        return $this->belongsToMany(Visitor::class, 'visits')
+            ->withTimestamps()
+            ->using(Visit::class);
     }
 }
