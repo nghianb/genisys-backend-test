@@ -16,7 +16,10 @@ class LoginController extends Controller
 
     public function login(LoginRequest $request)
     {
-        $credientals = $request->validated();
+        $credientals = $request->only([
+            'email',
+            'password'
+        ]);
 
         if (!Auth::attempt($credientals)) {
             throw ValidationException::withMessages([
